@@ -1,27 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoAction : ILeaf
+public abstract class DoAction : ILeaf
 {
-    string actionName;
-    GameObject agent;
-    float cost;
+    protected string actionName;
+    protected GameObject agent;
 
-    public DoAction(string actionName, GameObject agent, float cost)
+    public DoAction(string actionName, GameObject agent)
     {
         this.actionName = actionName;
         this.agent = agent;
-        this.cost = cost;
     }
 
-    public bool Resolve()
-    {
-        AIController aic = agent.GetComponent<AIController>();
-
-        if (!aic.DoAction(actionName))
-        {
-            Debug.Log("Action " + actionName + " not found");
-        }
-        return true;
-    }
+    public abstract bool Resolve();
 }

@@ -11,16 +11,13 @@ public class AIController : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float work = 0.5f;
 
-    private Dictionary<string, Action> actions;
+    public string currentAction;
     public Dictionary<string, float> wants;
 
     public Sequence root;
 
     private void Start()
     {
-        actions = new Dictionary<string, Action>();
-        actions.Add("Work", new Work(this.gameObject, 0.1f));
-        actions.Add("Rest", new Rest(this.gameObject));
 
         wants = new Dictionary<string, float>();
         wants.Add("fatigue", fatigue);
@@ -29,16 +26,16 @@ public class AIController : MonoBehaviour
         
         Sequence tired = new Sequence();
         tired.AddChild(new IsHighestNeed(this.gameObject, "fatigue"));
-        tired.AddChild(new MoveTo(this.gameObject, GameObject.Find("RestArea")));
-        tired.AddChild(new DoAction("Rest", this.gameObject, 0));
+        tired.AddChild(new MoveAction(this.gameObject, GameObject.Find("RestArea")));
+        tired.AddChild(new RestAction(this.gameObject));
 
         Inverter runTired = new Inverter();
         runTired.AddChild(tired);
 
         Sequence work = new Sequence();
         work.AddChild(new IsHighestNeed(this.gameObject, "work"));
-        work.AddChild(new MoveTo(this.gameObject, GameObject.Find("WorkArea")));
-        work.AddChild(new DoAction("Work", this.gameObject, 0.1f));
+        work.AddChild(new MoveAction(this.gameObject, GameObject.Find("WorkArea")));
+        work.AddChild(new WorkAction(this.gameObject));
 
         Inverter runWork = new Inverter();
         runWork.AddChild(work);
@@ -54,16 +51,16 @@ public class AIController : MonoBehaviour
         root.Resolve();
     }
 
-    public bool DoAction(string actionName)
+    public bool DoAction(string actionName, Action action)
     {
-        if (this.actions.ContainsKey(actionName))
-        {
-            this.actions[actionName].Run();
-            return true;
-        }
-        else
+        if (currentAction == actionName)
         {
             return false;
         }
+
+        currentAction = actionName;
+        action.Run();
+
+        return true;
     }
 }
