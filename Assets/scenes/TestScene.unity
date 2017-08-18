@@ -395,11 +395,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1591087672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f36cd00e5c767e44bb2fa616fe42c2c, type: 3}
+  m_Script: {fileID: 11500000, guid: a7c8c76b21cfb6245a1975cff59b89a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fatigue: 0
-  work: 0.5
 --- !u!195 &1591087674
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -3,14 +3,24 @@ using System.Collections;
 
 public abstract class Action
 {
-    public GameObject agent;
-    public string name;
+    public bool isRunning;
+    protected GameObject agent;
 
-    public Action(string name, GameObject agent)
+    public Action(GameObject agent)
     {
         this.agent = agent;
-        this.name = name;
+        this.isRunning = false;
     }
 
+    public abstract void Update();
+
     public abstract void Run();
+
+    public virtual void Abort()
+    {
+        if (this.isRunning)
+        {
+            this.isRunning = false;
+        }
+    }
 }

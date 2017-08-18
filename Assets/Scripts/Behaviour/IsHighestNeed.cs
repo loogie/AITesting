@@ -14,17 +14,18 @@ public class IsHighestNeed : ILeaf
 
     public bool Resolve()
     {
-        AIController aic = agent.GetComponent<AIController>();
+        AIComponent aic = agent.GetComponent<AIComponent>();
 
         float important = aic.wants[name];
 
-        foreach(float val in aic.wants.Values)
+        foreach (float val in aic.wants.Values)
         {
             if (important < val)
             {
                 return false;
             }
         }
+        
         return true;
     }
 }

@@ -3,16 +3,27 @@ using System.Collections;
 
 public class Work : Action
 {
-    public float cost;
+    float startTime;
 
-    public Work(GameObject agent, float cost):base("Work", agent)
+    public Work(GameObject agent) : base(agent)
     {
-        this.cost = cost;
+
     }
 
     public override void Run()
     {
-        Debug.Log("Running action WORK");
-        agent.GetComponent<AIController>().wants["fatigue"] += cost;
+        this.isRunning = true;
+        startTime = Time.realtimeSinceStartup;
     }
+
+    public override void Update()
+    {
+        float currentTime = Time.realtimeSinceStartup;
+
+        if (currentTime - startTime >= 2)
+        {
+            this.agent.GetComponent<AIComponent>().AddDesire("rest", 0.1f);
+        }
+    }
+    
 }

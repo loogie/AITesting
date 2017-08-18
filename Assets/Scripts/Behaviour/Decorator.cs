@@ -10,11 +10,23 @@ public class Decorator : ILeaf
         this.child = child;
     }
 
-    public virtual bool Resolve()
+    public bool Resolve()
     {
-        if (!child.Resolve())
-            return false;
+        return child.Resolve();
+    }
+}
 
-        return true;
+public class Inverter : ILeaf
+{
+    public ILeaf child;
+
+    public void AddChild(ILeaf child)
+    {
+        this.child = child;
+    }
+
+    public bool Resolve()
+    {
+        return !child.Resolve();
     }
 }
