@@ -10,6 +10,12 @@ public class Sequence : ILeaf
         children = new List<ILeaf>();
     }
 
+    public Sequence(params ILeaf[] children)
+    {
+        this.children = new List<ILeaf>();
+        this.children.AddRange(children);
+    }
+
     public void AddChild(ILeaf child)
     {
         this.children.Add(child);
